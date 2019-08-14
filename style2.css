@@ -1,0 +1,94 @@
+.fillupformheader {
+        height:12%;
+        background-color: white;
+        width: 100%;
+        position: fixed;
+        padding-left:35%;
+        border-bottom: 15px solid white;
+        overflow-wrap:auto;
+    } 
+
+    body {
+        margin:0px;
+        text-align: center;
+        margin-bottom: 5%;
+        color:white;
+        font-weight: bold;
+    }
+
+    .headerText {
+        color: white;
+        margin-right: 40%;
+        margin-top: 0%;
+        font-size: 50;
+        font-family: verdana;
+        position:absolute;
+
+    }
+
+    .fillupform {
+        margin-left: 30%;
+        width: 30%;
+        background-image: url("background27.jpg");
+        background-size: cover;
+        text-align: left;
+        font-size: 20px;
+        font-family: verdana;
+        padding-top: 10%;
+        padding-right: 6%;
+        padding-left: 6%;
+        padding-bottom: 10%;
+        box-shadow: 5px 5px 5px #bcb5b1;
+    }
+
+    .inputbox {
+        font-size:20px;
+        width:100%;
+    
+        
+    }
+
+    .checkbox {
+        height:4%;
+        width: 4%;
+    }
+
+    .submitform {
+        font-size: 20px;
+    }
+    .submitform:hover {
+        background-color:#ffe96d;
+        font-size: 23px;
+    }
+
+    .errorMessage {
+        text-align: left;
+        color: red;
+        font-size: 20px;
+        font-weight: bold;
+
+    }
+
+    
+    .married {
+        color:black;
+        font-family: verdana;
+    }
+    .box {
+        padding:5px 5px 5px;
+    }
+
+    .box:hover {
+     color: #ffe96d;
+     border-color: #ffe96d;
+     background-color:#065363;  
+
+    }
+    .container:hover {
+        color:#ffe96d;
+    }
+
+    .div {
+        height:10%;
+        padding-top: 7%;
+    }

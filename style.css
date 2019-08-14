@@ -1,0 +1,170 @@
+  .modal{
+    background-image: url(https://stmed.net/sites/default/files/keyboard-wallpapers-30703-6382924.jpg);
+    background-position-y:80%;
+    background-position-x:80%;
+    background-size:cover;
+    background-repeat: no-repeat;
+
+  }
+
+   .modal-content {
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 1px 1px 2px black, 0 0 25px lightblue, 0 0 5px white;
+    width: 200%;
+}
+
+
+
+input#fname{
+    color: black;
+    font-family: verdana;
+    font-size: 15px;
+}
+input#lname{
+    color:black;
+    font-family: verdana;
+    font-size: 15px;
+}
+input#Uname{
+    color: black;
+    font-family: verdana;
+    font-size: 15px;
+}
+input#password{
+    color: black;
+    font-family: verdana;
+    font-size: 15px;
+}
+input#Email{
+    color: black;
+    font-family: verdana;
+    font-size: 15px;
+}
+input .inputbox{
+    color:white;
+    margin: 8px ;
+    display: inline-block;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.ErrorName{
+    color: rgb(255,0,0);
+}
+.ErrorPassword{
+    color: rgb(255,0,0);
+}
+
+
+@media (max-width: 599px) {
+    #header .container {
+      width: 100%;
+    }
+}
+input[type=text], textarea {
+    color:white;
+    margin: 8px ;
+    display: inline-block;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+
+input[type=password], textarea {
+    width: 90%;
+    margin: 8px ;
+    display: inline-block;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+label {
+    color: white;
+    font-style: italic;
+}
+
+legend{
+    color: white;
+    font-size: 30px;
+    font-family: Verdana;
+
+}
+div #head{
+    text-align: center;
+}
+h4{
+    color: white;
+}
+
+
+input[type=email], textarea {
+    width: 90%;
+    margin: 8px ;
+    display: inline-block;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type = radio], textarea{
+    size: 30px;
+
+}
+
+
+Form{
+    margin-right: 10px;
+}
+
+div.gender{
+    font-size: 30px;
+}
+
+div #favorites{
+    font-size: 30px
+}
+div #fav1:hover, div #fav1:active{
+    text-shadow:1px 1px rgb(0,0,0);
+     
+     
+ }
+ div #fav2:hover, div #fav2:active{
+    text-shadow:1px 1px rgb(0,0,0);
+     
+ }
+ div #fav3:hover, div #fav3:active{
+     text-shadow:1px 1px rgb(0,0,0);
+     
+     
+ }
+ div #fav4:hover, div #fav4:active{
+     text-shadow:1px 1px rgb(0,0,0);
+    
+     
+ }
+
+div #submit {
+  border: none;
+  color:white;
+  padding: 10px 30px;
+  text-align: center;
+  margin-left: 0px;
+  transition: 0.3s;
+  border-radius: 10px;
+ 
+
+}
+
+h4{
+    font-size: 30px;
+    color: white;
+}
+#dev #developers{
+  background:linear-gradient(white,blue);
+  border: none;
+  color:white;
+  padding: 10px 30px;
+  text-align: center;
+  font-size: 16px;
+  margin-left: 0px;
+  transition: 0.3s;
+  border-radius: 10px;
+}

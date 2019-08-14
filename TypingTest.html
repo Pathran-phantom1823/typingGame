@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script>
+    	var letters = "abcdefghijklmnopqrstuvwxyz";
+    	var addletters = 0;
+    	var text = "";
+    	var speed = 500;
+    	var score = 0;
+    	var gameover = false;
+    	var mistake =0;
+    	var level = 1;
+    	var levelcomplete = false;
+    	var showlevelcom = false;
+    	var moremistake = false;
+    	var prog = 0;
+    	var bprog = 0;
+    	var startprogram = false;
+    	var stopgame = false;
+    	var addscore = 1;
+
+    	function moveback() {
+      		score = 0;
+      		mistake = 0;
+      		level = 1;
+      		$(".scoredisplay").text(score);
+      		$(".mistakedisplay").text(mistake);
+      		$(".letters").text("START.TYPING.");
+      		$(".leveldisplay").text(level);
+    		$("#gameover").text("");
+    		$(".startlevel").text("");
+    		var elem = $("#character");   
+	        var width = 100;
+	        bprog = setInterval(frame, 50);
+	        function frame() {
+	        	if (width == 10) {
+	        		$("#character").css({"background-color":"#d5dfe8"});
+	        		clearInterval(bprog);
+	        		gameover = false;
+	        		showlevelcom = false;
+	        		$("#eater").text("<");
+        		} else {
+        			width =  width - 10; 
+		            var w = width+"%";
+		            elem.css({"width":w}); 
+		        }
+	    	}
+	    }
+
+    	function move() {
+	        var elem = $("#character");   
+	        var width = 10;
+	        prog = setInterval(frame, 50);
+	        function frame() {
+	          if (width >= 100) {
+	            clearInterval(prog);
+	            if (gameover == false && showlevelcom == true) {
+	            	$("#gameover").text(" LEVEL "+level+" COMPLETE");
+	            	++level;
+	            	++addscore;
+	            	$(".leveldisplay").text(level);
+	            	showlevelcom = false;
+	            	levelcomplete = true;
+	            	speed = speed - 100;
+	            	if (speed <= 0) {
+	            		stopgame = true;
+	            		$(".startlevel").text("YOU HAVE REACH THE HIGHEST LEVEL, CONGRATUALATIONS!");
+	            	} else {
+	            		$(".startlevel").text(level+" POINTS PER LETTER | PRESS ANY KEY TO CONTINUE");
+	            	}
+	            } else {
+	            	if (moremistake == true) {
+	            		$(".startlevel").text("YOU MADE MORE MISTAKES THAN SCORE | PRESS ANY KEY TO PLAY AGAIN");
+	            		moremistake = false;
+	            	} else {
+	           			$(".startlevel").text("PRESS ANY KEY TO PLAY AGAIN");
+	            	}
+	           		$("#gameover").text("GAME OVER");
+	           		startprogram = false;
+		        }
+	          } else {
+	            width=  width + 10; 
+	            var w = width+"%";
+	            elem.css({"width":w}); 
+	          } 
+	        }
+      }   
+
+      function gameOver() {
+      	clearInterval(addletters);
+      	$("#eater").text("");
+  		$("#character").css({"background-color":"#fc505f"});
+  		gameover = true;
+  		move();
+      }
+
+      function levelCompleted() {
+      	$("#character").css({"background-color":"#06a4cc"});
+      	$("#eater").text("");
+      	clearInterval(addletters);
+		showlevelcom = true;
+		move();
+      }
+
+    	function startgame() {
+			addletters = setInterval(function() {
+			var pick = Math.floor(Math.random()*27);
+			var capsOrNot = Math.floor(Math.random()*6);
+			var add = letters.charAt(pick);
+			add = letters.charAt(pick).toUpperCase();
+			text = $(".letters").text();
+			if (text.length >= 20) {
+  			 	gameOver();
+  			 } else if (text.length == 0) {
+  				levelCompleted();
+  			} else if (mistake > score) {
+  				moremistake = true;
+  				gameOver();
+  			} else {
+    			 $(".letters").text(text+add);
+  			}
+		}, speed);
+    	}
+      
+      $('html').keypress(function( event ) {
+      	if (startprogram == false && stopgame == false) {
+      		moveback();
+      		startprogram = true;
+      		startgame();   
+      	} else {
+	      	if (gameover == false && showlevelcom == false) {
+	      		if (levelcomplete == true) {
+	      			$("#character").css({"width":"10%","background-color":"#d5dfe8"});
+	      			$("#eater").text("<");
+	      			levelcomplete = false;
+	      			$("#gameover").text("").css({"color":"white"});
+	      			$(".startlevel").text("");
+	      			startgame();
+	      			$(".letters").text("START.TYPING.");
+	      		} else {
+			      	text = $(".letters").text();
+			        if (event.key.toLowerCase() == text.charAt(0).toLowerCase()) {
+			        	text = text.substring(1);
+			        	$(".letters").text(text);
+			        	$(".scoredisplay").text(score);
+			        	score += addscore;
+			        } else {
+			        	++mistake;
+			        	$(".mistakedisplay").text(mistake);
+			        }
+				        
+				    } 
+				}
+			     
+		    }
+		
+      });
+
+		$(document).ready(function () {
+			$(".exit").click(function () {
+				window.location.href = "difficulty.html";	
+			});
+		});
+
+		$(document).ready(function () {
+			$(".restart").click(function () {
+				location.reload(true);
+			});
+		});
+
+    </script>
+</head>
+<style type="text/css">
+	body {
+
+		padding-top: 30px;
+		width: 1250px;
+		padding-left: 160px;
+		padding-right: 40px;
+	}
+	#statdisplay {
+		border-top-left-radius: 15px;
+		border-top-right-radius: 15px;
+		height: 150px;
+		text-align: center;
+		color: white;
+		background-color: #026a84;
+	}
+
+	#gamedisplay {
+		height: 300px;
+		position: relative;
+		padding: 0;
+		/*background: linear-gradient(to right, #4d89e2,white);*/
+/*		background-color: white;
+*/		text-align: right;
+		background-color: #d5dfe8;
+	}
+
+	#displaysomething {
+		height: 150px;
+		background: linear-gradient(#026a84,#062b5e);
+		border-bottom-left-radius: 15px;
+		border-bottom-right-radius: 15px;
+	}
+
+
+	#character {
+		height: 300px;
+		width: 100%;
+		position: absolute;
+		text-align: center;
+		margin:0;
+		background-color:#06a4cc;
+		background-size: cover;
+	}
+
+	.letters {
+		font-size: 70px;
+		z-index: 9999;
+		padding-right: 40px;
+		padding-top: 80px;
+		padding-bottom: 80px;
+		text-shadow: 10px 10px 10px #94a0a3;
+
+	} 
+	.scoredisplay {
+		margin-top: 0px;
+		padding-top: 0px;
+		font-size: 80px;
+		margin-bottom: 0px;
+		text-shadow: 10px 10px 10px black;
+
+	}
+
+	.mistakedisplay {
+		margin-top: 0px;
+		padding-top: 30px;
+		font-size: 60px;
+		margin-bottom: 0px;
+		text-shadow: 6px 6px 6px black;
+
+	}
+	.leveldisplay {
+		margin-top: 0px;
+		padding-top: 30px;
+		font-size: 60px;
+		margin-bottom: 0px;
+		text-shadow: 6px 6px 6px black;
+
+	}
+	.scoretext {
+		font-size: 30px;
+		margin-top: 0;
+		text-shadow: 6px 6px 6px black;
+
+	}
+
+	.exit {
+		padding-top: 1%;
+		color: white;
+		text-decoration: underline;
+		font-size: 30px;
+		margin-top: 0;
+		text-shadow: 6px 6px 6px black;
+		float: left;
+		padding-left: 4%;
+	}
+
+	.exit:hover {
+		text-shadow: none;
+	}
+
+	.restart {
+		padding-top: 1%;
+		color: white;
+		text-decoration: underline;
+		font-size: 30px;
+		margin-top: 0;
+		text-shadow: 6px 6px 6px black;
+		float:right;
+		padding-right: 4%;
+
+	}
+
+	.restart:hover {
+		text-shadow: none;
+	}
+	.mistext {
+		font-size: 20px;
+		margin-top: 0;
+		text-shadow: 6px 6px 6px black;
+	}
+	.leveltext {
+		font-size: 20px;
+		margin-top: 0;
+		text-shadow: 6px 6px 6px black;
+	}
+
+	#gameover {
+		font-size: 70px;
+		text-shadow: 10px 10px 10px black;
+		margin-left: 0;
+		margin-right: 0;
+		color: white;
+		padding-top: 80px;
+		padding-bottom: 80px;
+	}
+
+	.col {
+		
+		padding-right: 70px;
+		padding-right: 70px;
+		
+	}
+
+	table {
+		margin-right: 32%;
+		margin-left: 32%;
+	}
+
+	.startlevel {
+		font-size: 20px;
+		color: white;
+		text-shadow: 10px 10px 10px black;
+	}
+
+	#eater {
+		float:left;
+		color: red;
+		text-shadow: 10px 10px 10px #b79296;
+		font-size: 210px;
+	}
+
+	
+
+
+
+	
+</style>
+<center><body>
+	<div id="statdisplay" class="container-fluid text-center">
+		<table>
+			<tr>
+				<td class="col"><p class="mistakedisplay">0</p></td>
+				<td class="col"><p class="scoredisplay">0</p></td>
+				<td class="col"><p class="leveldisplay">1</p></td>
+			</tr>
+			<tr>
+				<td class="col"><h1 class="mistext">MISTAKE</h1></td>
+				<td class="col"><h1 class="scoretext">SCORE</h1></td>
+				<td class="col"><h1 class="leveltext">LEVEL</h1></td>
+			</tr>
+		</table>
+	</div>
+	<div id="gamedisplay" class="container-fluid text-center">
+		<div id="character" class="col-sm-3">
+			<h1 id="eater"></h1>
+			<p id="gameover">&nbsp;&nbsp;TYPING GAME</p>
+			<p class="startlevel">PRESS ANY KEY TO START</p>
+		</div>
+		<h1 class="letters">START.TYPING.</h1>
+		
+	</div>
+	<div id="displaysomething" class="container-fluid text-center">
+	<br><br>
+		<span class="restart">RESTART</span>
+			<span class="exit">EXIT</span>
+	</div>
+</body></center>

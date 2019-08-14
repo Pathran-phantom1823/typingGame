@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script>
+      var char = 0;
+      var mistake = 0;
+      var NumberOfMinute = 1;
+      var wpmpage = false;
+      var findex = 0;
+      var lineid = 1 ;
+      var back = false;
+      var letter = 0;
+      var mis = 0;
+      var start = false;
+      var start2 =false;
+      var showtext = false;
+      var timer2 ="1:00";
+      var prog = 0;
+      var retype = false;
+      var interval = 0;
+      var timeholder = "1:00";
+    
+
+
+       function move() {
+        var elem = $("#myBar");   
+        var width = 0;
+        prog = setInterval(frame, 600*NumberOfMinute);
+        function frame() {
+          if (width >= 100) {
+            clearInterval(prog);
+           
+          } else {
+            width++; 
+            var w = width+"%";
+            elem.css({"width":w}); 
+          } 
+        }
+      }
+      function restart() {
+        for (var i=0;i<960;++i) {
+          var id = "#"+i;
+          $(id).css({"color":"#0a044c",background:'linear-gradient(white,white)'});
+        } 
+
+        for (var i=1;i<33;++i) {
+          var lid = "#l"+i;
+          $(lid).show();
+        } 
+        letter = 0;
+        lineid = 1;
+        char = 0;
+        mistake = 0;
+      }
+      
+      function startTime() {
+        timer2 =NumberOfMinute+":00";
+        interval = setInterval(function() {
+        var timer = timer2.split(':');
+        var minutes = parseInt(timer[0], 10);
+        var seconds = parseInt(timer[1], 10);
+        --seconds;
+        minutes = (seconds < 0) ? --minutes : minutes;
+        seconds = (seconds < 0) ? 59 : seconds;
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+        if (minutes < 0) {
+          clearInterval(interval);
+          $(".cont").hide();
+          $("#wpm").text((((char)/5)/NumberOfMinute).toFixed());
+          $("#wpmT").text("Words per minute");
+          $('.countdown').text(NumberOfMinute+":00");
+          $(".option").css({"padding-top":"30px","padding-bottom":"30px","margin-top":"10px"});
+          $(".btn").css({"font-size":"30px"});
+          $("#rsbutton").show();
+          $("#rsbutton2").hide();
+          $("#rsbutton").css({"background-color":"#058ac6"});
+          $("#myBar").css({"width":"0%"}); 
+          timer2 = "1:00";
+          showtext = false;
+          start = false;
+          letter = 0;
+          wpmpage = true;
+           nletter();
+          var acc = (100-((mistake/(char+mistake))*100)).toFixed();
+          if (acc < 0 || isNaN(acc)==true) {
+            acc = 0;
+          }
+          $("#accuracy").text(acc+"%");
+          var text = " minute";
+          
+          
+        } else {
+          $('.countdown').html(minutes + ':' + seconds);
+        }
+         var acc = (100-((mistake/(char+mistake))*100)).toFixed();
+        if (acc < 0 || isNaN(acc)==true) {
+            acc = 0;
+          }
+        $("#wpm").text(((char/5)/NumberOfMinute).toFixed());
+        $("#accuracy").text(acc+"%");
+        timer2 = minutes + ':' + seconds;
+        }, 1000);
+      }
+
+  
+
+      $('html').keyup(function( event ) {
+        if (showtext == true) {
+          if (start == false ) {
+              startTime();
+            }
+          back = false;
+          start2 = true;
+          start = true;
+          wpmpage = false;
+
+          if(event.keyCode == 8) {
+              mis = 0
+              back = true;
+              if (letter % 30 != 0) {
+                 var id = "#"+letter;
+                 $(id).css({"color":"#0a044c",background:'linear-gradient(#81a9f9,#030f7a)'});
+                 --letter;
+                 id = "#"+letter;
+                 $(id).css({"color":"white",background:'linear-gradient(#81a9f9,#030f7a)'});
+                 var tid = "#"+(letter+1);
+                 $(tid).css({"color":"#0a044c;",background:'linear-gradient(white,white)'})
+              }
+              nletter();
+              
+            }
+        }
+      });
+      var keyholder = 0;
+      function nletter() {
+        var id = "#"+letter;
+        $(keyholder).css({"background-color":"lightblue"});
+        if (showtext == true) {
+          for (var i=1;i<47;++i) {
+              kid= "#k"+i;
+              if( $(kid).text() == $(id).text() || $(kid).text().toLowerCase() == $(id).text() || $(kid).text().includes($(id).text()) || ($(kid).text()=="SPACE" && "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghjiklmnopqrstuvwxyz,.?!;:*&^%$#@()_+-<>|1234567890[]{}'`~".includes($(id).text())==false)) {
+                 $(kid).css({"background-color":"yellow"});
+                 keyholder = kid;
+                 break;
+              } 
+          }
+        }
+      }
+ 
+      
+      $('html').keypress(function( event ) {
+        if (showtext == true) {
+            var id = "#"+letter;
+             var kid = "";
+            for (var i=1;i<47;++i) {
+              kid= "#k"+i;
+              if( $(kid).text() == event.key || $(kid).text().toLowerCase() == event.key || ($(kid).text()=="SPACE" && event.key == " ") || ($(kid).text().includes(event.key)) ) {
+                 break;
+              } 
+            }
+            setTimeout(function() {
+              $(".wrongtyped").text("");
+            }, 500);
+            setTimeout(function() {
+              $(kid).css({"background-color":"lightblue"});
+              nletter();
+            },100);
+
+            $(kid).css({"background-color":"#f45f64"});
+           
+            
+              if (start == false ) {
+                startTime();
+                move();
+              }
+              back = false;
+              start2 = true;
+              start = true;
+              wpmpage = false;
+              if (event.keyCode != 16) {
+                if (event.key == $(id).text()) {
+                  $(id).css({"color":"#01368c",background:'linear-gradient(#b3f1f2,#639af2)'})
+                  ++char;
+                   mis = 0;
+                } else if (event.keyCode==32 && "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghjiklmnopqrstuvwxyz,.?!;:*&^%$#@()_+-<>|1234567890[]{}'`~".includes($(id).text())==false) {
+                  $(id).css({"color":"#01368c",background:'linear-gradient(#b3f1f2,#639af2)'})
+                   ++char;
+                   mis = 0;
+                } else {
+                  $(".wrongtyped").text(event.key);
+                   $(id).css({"color":"#6d020c",background:'linear-gradient(#f7cace,#cc3543)'})
+                    ++mis;
+                   ++mistake;
+                }
+                if (back ==false) {
+                  if (mis < 2) {
+                    ++letter;
+                    id = "#"+letter;
+                    $(id).css({"color":"white",background:'linear-gradient(#81a9f9,#030f7a)'});
+                   
+                    if ((letter) % 30 == 0) { 
+        
+                      if (letter == 960) {
+
+                        restart();
+                      } 
+                       var lid = "#l" + (lineid-1);
+                       $(lid).hide();
+                       console.log(lineid);
+                       console.log(letter);                  
+                       ++lineid;
+
+                    }
+                  } else {
+                    $(id).css({"color":"white",background:'linear-gradient(#f41627,#68020a)'});
+                  }
+        
+                }
+                nletter(); 
+              }
+            }
+      });
+
+
+
+    
+       $(document).ready(function() {
+          $("#exit").click(function() {
+            if (start == true || showtext == true) {
+              location.reload(true);
+            } else {
+              window.location.href = "difficulty.html";
+            }
+            
+          });
+      });
+
+      
+      
+       $(document).ready(function() {
+          $("#increase").click(function() {
+            if (start == false) {
+              var timer = timeholder.split(':');
+              var minutes = parseInt(timer[0], 10);
+              if (minutes == 30) {
+                alert("You've reached the maximum time allowed!")
+              } else  {
+                  var timer3 = ++minutes + ':00';
+                  NumberOfMinute = minutes
+                  $(".timeadjust").text(timer3);
+                  $('.countdown').text(timer3);
+                  timer2 = timer3;
+                  timeholder = timer3;
+              }
+            } 
+          });
+      });
+
+        $(document).ready(function() {
+          $("#decrease").click(function() {
+            if (start == false) {
+              var timer = timeholder.split(':');
+              var minutes = parseInt(timer[0], 10);
+              if (minutes == 1) {
+                alert("Your cannot set your time lesser than 1 minute!")
+              } else  {
+                  var timer3 = --minutes + ':00';
+                  NumberOfMinute = minutes
+                  $(".timeadjust").text(timer3);
+                  $('.countdown').text(timer3);
+                  timer2 = timer3;
+                  timeholder = timer3;
+              }
+            } 
+          });
+        });
+
+
+
+      
+        $(document).ready(function() {
+          $("#rsbutton").click(function() {
+            if (showtext == false) {
+              $(".cont").slideDown();
+              $(".option").css({"height":"30px","padding-top":"0px","padding-bottom":"0px"});
+              $(".btn").css({"font-size":"11px"});
+              $("#rsbutton").css({"background-color":"lightblue"});
+              showtext = true;
+              start = false;
+              clearInterval(prog);
+              restart();
+              $("#wpm").text("0");
+              $("#accuracy").text("0%");
+              nletter();
+            } 
+          });
+        });
+
+       
+
+
+
+
+
+
+
+
+     
+    </script>
+   
+</head>
+<style type="text/css">
+  
+body {
+    margin:0;
+    background-color: #d5dfe8;
+    /*box-shadow: 0px 200px 200px #0b0849 inset;*/
+    /*background-image: url("http://paperlief.com/images/computer-keyboard-wallpaper-2.jpg");*/
+    background-size: cover;
+    padding-right: 15%;
+    padding-left: 15%;
+
+  }
+
+  p {
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 1px;
+    margin-left: 1px;
+    float:left;
+    font-size: 29px;
+    font-family: "Lucida Console", Monaco, monospace;
+    border-radius: 5px;
+    color: #0a044c;
+   
+  }
+  #text {
+    border:none;
+    font-size: 50px;
+    width: 100%;
+  }
+
+   .cont {
+    padding: 10px 10px 10px;
+    height:150px;    
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+    padding-left: 7%;
+  
+  }
+
+  
+
+  .wpm {
+    font-size: 50px;
+    padding-top: 0%;
+    color:#ffe500;
+    letter-spacing: 0px;
+    font-family: Lato, sans-serif;
+  }
+
+  .wpmtext {
+    font-size: 40px;
+    color:white;
+    letter-spacing: 1px;
+    font-family: Lato, sans-serif;
+  }
+
+  .mistext {
+    font-size: 30px;
+    color:white;
+    font-family:  "Lucida Console", Monaco, monospace;
+  }
+
+  .mistakes {
+    color: #ff2600;
+    font-size: 39px;
+    font-weight: bold;
+
+    text-decoration: line-through;
+    padding: 0px;
+    font-family:  "Lucida Console", Monaco, monospace;
+  }
+
+  .Minute {
+    font-size: 45px;
+    padding-top: 0%;
+    color:#ffe500;
+    letter-spacing: 1px;
+    font-family: Lato, sans-serif;
+  }
+  .typewrite {
+    font-size: 20px;
+    color: #3aaee8;
+    text-decoration: none;
+    font-family: Lato, sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .lineContainer {
+    height: 50px;
+    width: 100%;
+    padding-left: 3%;
+  }
+
+  
+  hr {
+    color:#f2f2f2;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .cont5hr {
+    color:#f2f2f2;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+
+  .Header {
+    height: 10%;
+    margin: 0;
+    color: white;
+    background: linear-gradient(#026a84,#062b5e);
+    text-align: right;
+    padding: 0;
+    padding: 7px 5px 5px;
+    font-family: "Lucida Console", Monaco, monospace;
+
+  }
+
+  #back {
+    float: left;
+    margin: 0;
+    padding: 3px 3px 3px;
+    border: 1px solid white;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+
+  #back:hover {
+    background-color: #00ddff;
+    color: #062b5e;
+    border: 1px solid #062b5e;
+  }
+
+  
+
+
+  .TyTest {
+    color: white;
+    float: left;
+    margin: 0;
+  }
+  .result {
+    text-align: right;
+  }
+
+  
+
+  #myProgress {
+  width: 100%;
+  background-color: #83b1ef;
+  }
+
+  #myBar {
+    width: 0%;
+    height: 7px;
+    background-color: #fffa00;
+  }
+
+  .time {
+    text-align: center;
+
+  }
+
+  
+
+
+  .resultholder {
+    padding: 3px 3px 3px;
+    background-color: blue;
+    border-radius: 15px;
+    margin-right: 6%;
+    margin-left: 6%;
+    background: linear-gradient(#026a84,#062b5e);
+     border: 5px solid #bfdaff;
+  }
+
+  .line {
+    width: 50%;
+  }
+
+   .linefp {
+    width: 50%;
+    position: relative;
+    margin-bottom: 21px;
+
+
+  }
+  
+
+  
+  .in {
+    position: absolute;
+    right: 0;
+    left: 0;
+    font-size: 28px;
+    margin-left: 48%;
+    background-color: #004d82;
+    border-radius: 10px;
+    margin-right: 48%;
+    top: 17%;
+    color: white;
+    font-family: Lato, sans-serif;
+
+
+  }
+
+  .wrongtyped {
+    font-size: 200px;
+    position: absolute;
+    text-shadow: 5px 5px 5pc red;
+    right: 40%;
+    left: 40%;
+    top: 5%;
+    bottom: 0;
+    font-family: "Lucida Console", Monaco, monospace;
+    color: #fc1134;
+    padding: 0;
+    opacity: 0.4;
+  }
+
+  .status {
+    background: linear-gradient(#062b5e,#026a84);
+    margin-top: 2%;
+    height: 100px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 1%;
+    padding-bottom: 1%;
+  }
+
+  
+  #frow {
+    padding-left: 0%;
+  }
+
+   #srow {
+    padding-left: 0%;
+  }
+
+   #trow {
+    padding-left: 0%;
+  }
+
+  .key {
+    letter-spacing: 20px;
+    color: #2e60cc;
+    background-color: lightblue;
+    padding:10px 10px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+
+  #k28 {
+    letter-spacing: 0px;
+  }
+
+ 
+  .lineContainer2 {
+    text-align: center;
+    height: 60px;
+    width: 100%;
+  }
+
+  .countdown {
+    margin:0;
+    background-color: white;
+    border-radius: 10px;
+    font-size: 40px;
+    color: #062b5e;
+    font-family: "Lucida Console", Monaco, monospace;
+  }
+
+  .wpmdisplay {
+    margin:0;
+    border-radius: 10px;
+    background-color: white;
+    color: #062b5e;
+    font-size: 40px;
+    font-family: "Lucida Console", Monaco, monospace;
+  }
+
+  .accdisplay {
+    background-color: white;
+    margin:0;
+    border-radius: 10px;
+    font-size: 40px;
+    color: #062b5e;
+    font-family: "Lucida Console", Monaco, monospace;
+  }
+
+  #wpm {
+    margin-right:0;
+    color: #062b5e;
+  }
+
+  #accuracy {
+    margin-right:0px;
+    color: #062b5e;
+
+  }
+
+.adjtime {
+    height: 10%:;
+    margin-top: 10px;
+    float: right;
+    margin-right: 2%;
+    color: #062b5e;
+    border-radius: 2px;
+    text-align: center;
+    background-color: #83b1ef;
+    padding: 5px 5px 5px;
+    border-radius: 10px;
+    float: left;
+    margin-left: 20px;
+  }
+
+
+  .adjust {
+
+    font-size: 30px;
+    border-radius: 10px;
+    color: #062b5e;
+    background-color: white;
+    letter-spacing: 0px;
+    font-family: Lato, sans-serif;
+  }
+
+  .timeadjust {
+    font-size: 28px;
+    padding: 5px 5px 5px;
+    color: #062b5e;
+    letter-spacing: 0px;
+    border-radius: 10px;
+    margin-bottom: 0;
+    background-color: white;
+    font-family: Lato, sans-serif;
+  }
+
+  .acc {
+    font-size: 20px;
+    color: #062b5e;
+    font-family: Lato, sans-serif;
+    padding-top: 0;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+  .acc2 {
+    font-size: 17px;
+    color: #062b5e;
+    font-family: Lato, sans-serif;
+    font-weight: bold;
+  }
+
+  .statdis {
+    float: right;
+    text-align: left;
+    background-color: #83b1ef;
+    border-radius: 10px;
+    margin-right: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 10px;
+  }
+
+  .rdis {
+    width: 220px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    border-radius: 10px;
+  }
+
+  .discont {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin:0;
+    width: 220px;
+    text-align: center;
+  }
+
+  
+  .keyboard {
+    text-align: center;
+    font-family: "Lucida Console", Monaco, monospace;
+    background: linear-gradient(#026a84,#062b5e);
+    padding-top: 3%;
+    padding-bottom: 3%;
+    padding-right: 0px;
+    padding-left:5%;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .key2 {
+    letter-spacing: 0px;
+    color:#2e60cc;
+    background-color: lightblue;
+    padding:10px 10px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+
+   #k27 {
+    color:lightblue;
+    width: 380px;
+    background-color: lightblue;
+    letter-spacing: 40px;
+    border-radius: 5px;
+    margin-top: 0%;
+  }
+
+  #k40 {
+    padding-top: 6px;
+    padding-bottom: 5px;
+  }
+
+  #k43 {
+    padding-top: 6px;
+    padding-bottom: 5px;
+  }
+
+  #k35 {
+    letter-spacing: 5px;
+  }
+
+  #k36 {
+    letter-spacing: 5px;
+  
+  }
+
+  #k38 {
+   letter-spacing: 3px;
+  
+   }   
+
+
+  .btn {
+    width: 15%;
+    color: white;
+    margin-top: 5px;
+    font-size: 30px;
+    border:none;
+    font-family:  "Lucida Console", Monaco, monospace;
+    border-radius: 9px;
+  
+  }
+
+   #rsbutton {
+    margin-left: 2%;
+    padding:5px 5px 5px;
+    background-color: #058ac6;
+  }
+
+  #rsbutton2 {
+    margin-left: 2%;
+    padding:5px 5px 5px;
+    background-color: #058ac6;
+  }
+
+
+  #exit {
+    margin-right: 2%; 
+    padding:5px 5px 5px;
+    background-color: #e0060d;
+
+  }
+  #rsbutton:hover {
+    color:blue;
+    background-color: lightblue;
+  }
+
+   #rsbutton2:hover {
+    color:blue;
+    background-color: lightblue;
+  }
+  #exit:hover {
+    color:blue;
+    background-color: lightblue;
+  }
+  
+
+  .option {
+     padding-top: 30px;
+     padding-bottom: 30px;
+     margin-top: 10px;
+     border-radius: 10px;
+     background-repeat: no-repeat;
+     background-size: cover;
+     text-align: center;
+     background-image: url("assets/keyboard.webp");
+/*     background: linear-gradient(#026a84,#062b5e);
+*/  }
+ 
+ 
+    .typerholder {
+      width: 950px;
+      height: 700px;
+    }
+
+
+  
+
+
+  
+</style>
+
+<center><body>
+ 
+  <div class="typerholder">
+    <div class="status">
+      <table class="statdis">
+        <tr>
+          <td class="rdis"><h2 class="wpmdisplay" id="wpm">0</h2></td>         
+          <td class="rdis"><h2 class="accdisplay" id="accuracy">0%</h2></td>
+          <td class="rdis"><h2 class="countdown">1:00</h2></td>         
+        </tr>
+        <tr>
+          <td class="discont"><h2 class="acc" id="wpmT">Words per minute</h2></td>
+          <td class="discont"><h2 class="acc">Accuracy</h2></td>
+          <td class="discont"><h2 class="acc">Time</h2></td>
+        </tr>
+        
+      </table>
+      <table class="adjtime">
+        <tr>
+          <td><button class="adjust" id="decrease">&nbsp;-&nbsp;</button>&nbsp;&nbsp;<span class="timeadjust">1:00</span>&nbsp;&nbsp;<button class="adjust" id="increase">&nbsp;+&nbsp;</button></td>
+        </tr>
+        <tr>
+          <td><span class="acc2">CHANGE TIME LIMIT</span></td>
+        </tr>
+      </table>
+    </div>
+    <div id="myProgress">
+      <div id="myBar"></div>
+    </div>
+    <div id="container1" class="cont" style="display: none">
+      <span class="wrongtyped"></span>
+      <div class="lineContainer" id="l1">
+        <p id='0' style="background-color: #81a9f9;color: blue">a</p><p id='1'>d</p><p id='2'>s</p><p id='3'>f</p><p id='4'>E</p><p id='5'>i</p><p id='6'>p</p><p id='7'>i</p><p id='8'>a</p><p id='9'>&nbsp;</p><p id='10'>a</p><p id='11'>s</p><p id='12'>d</p><p id='13'>a</p><p id='14'>k</p><p id='15'>d</p><p id='16'>f</p><p id='17'>a</p><p id='18'>.</p><p id='19'>&nbsp;</p><p id='20'>a</p><p id='21'>d</p><p id='22'>s</p><p id='23'>f</p><p id='24'>l</p><p id='25'>a</p><p id='26'>d</p><p id='27'>a</p><p id='28'>&nbsp;</p><p id='29'>a</p>
+      </div>
+      <div class="lineContainer" id="l2">
+         <p id='30'>j</p><p id='31'>d</p><p id='32'>r</p><p id='33'>;</p><p id='34'>8</p><p id='35'>&nbsp;</p><p id='36'>b</p><p id='37'>D</p><p id='38'>E</p><p id='39'>m</p><p id='40'>x</p><p id='41'>&nbsp;</p><p id='42'>d</p><p id='43'>t</p><p id='44'>a</p><p id='45'>K</p><p id='46'>j</p><p id='47'>1</p><p id='48'>&nbsp;</p><p id='49'>q</p><p id='50'>:</p><p id='51'>J</p><p id='52'>e</p><p id='53'>D</p><p id='54'>f</p><p id='55'>?</p><p id='56'>V</p><p id='57'>j</p><p id='58'>d</p><p id='59'>f</p>
+      </div>
+
+      <div class="lineContainer" id="l3">
+        <p id='60'>g</p><p id='61'>d</p><p id='62'>f</p><p id='63'>!</p><p id='64'>Z</p><p id='65'>a</p><p id='66'>s</p><p id='67'>k</p><p id='68'>d</p><p id='69'>f</p><p id='70'>j</p><p id='71'>a</p><p id='72'>&nbsp;</p><p id='73'>s</p><p id='74'>4</p><p id='75'>e</p><p id='76'>p</p><p id='77'>q</p><p id='78'>w</p><p id='79'>o</p><p id='80'>i</p><p id='81'>&nbsp;</p><p id='82'>n</p><p id='83'>n</p><p id='84'>a</p><p id='85'>d</p><p id='86'>b</p><p id='87'>n</p><p id='88'>,</p><p id='89'>a</p>
+      </div>
+     
+      <div class="lineContainer" id="l4">
+        <p id='90'>d</p><p id='91'>s</p><p id='92'>f</p><p id='93'>c</p><p id='94'>x</p><p id='95'>v</p><p id='96'>m</p><p id='97'>&nbsp;</p><p id='98'>z</p><p id='99'>x</p><p id='100'>c</p><p id='101'>v</p><p id='102'>z</p><p id='103'>m</p><p id='104'>&nbsp;</p><p id='105'>q</p><p id='106'>w</p><p id='107'>e</p><p id='108'>J</p><p id='109'>H</p><p id='110'>e</p><p id='111'>r</p><p id='112'>e</p><p id='113'>w</p><p id='114'>&nbsp;</p><p id='115'>h</p><p id='116'>a</p><p id='117'>v</p><p id='118'>d</p><p id='119'>;</p>
+      </div>
+      
+      <div class="lineContainer" id="l5">
+        <p id='120'>f</p><p id='121'>a</p><p id='122'>n</p><p id='123'>a</p><p id='124'>d</p><p id='125'>s</p><p id='126'>f</p><p id='127'>a</p><p id='128'>.</p><p id='129'>&nbsp;</p><p id='130'>a</p><p id='131'>j</p><p id='132'>d</p><p id='133'>f</p><p id='134'>j</p><p id='135'>a</p><p id='136'>i</p><p id='137'>e</p><p id='138'>&nbsp;</p><p id='139'>q</p><p id='140'>w</p><p id='141'>e</p><p id='142'>r</p><p id='143'>i</p><p id='144'>q</p><p id='145'>w</p><p id='146'>e</p><p id='147'>&nbsp;</p><p id='148'>a</p><p id='149'>k</p>
+      </div>
+      
+      <div class="lineContainer" id="l6">
+        <p id='150'>l</p><p id='151'>q</p><p id='152'>l</p><p id='153'>p</p><p id='154'>q</p><p id='155'>a</p><p id='156'>&nbsp;</p><p id='157'>p</p><p id='158'>w</p><p id='159'>q</p><p id='160'>p</p><p id='161'>e</p><p id='162'>j</p><p id='163'>m</p><p id='164'>z</p><p id='165'>&nbsp;</p><p id='166'>m</p><p id='167'>z</p><p id='168'>c</p><p id='169'>x</p><p id='170'>z</p><p id='171'>,</p><p id='172'>&nbsp;</p><p id='173'>.</p><p id='174'>a</p><p id='175'>j</p><p id='176'>d</p><p id='177'>s</p><p id='178'>d</p><p id='179'>f</p>
+      </div>
+    
+      <div class="lineContainer" id="l7">
+        <p id='180'>L</p><p id='181'>w</p><p id='182'>t</p><p id='183'>i</p><p id='184'>l</p><p id='185'>p</p><p id='186'>&nbsp;</p><p id='187'>l</p><p id='188'>e</p><p id='189'>r</p><p id='190'>g</p><p id='191'>j</p><p id='192'>&nbsp;</p><p id='193'>l</p><p id='194'>v</p><p id='195'>m</p><p id='196'>a</p><p id='197'>&nbsp;</p><p id='198'>d</p><p id='199'>f</p><p id='200'>a</p><p id='201'>d</p><p id='202'>a</p><p id='203'>&nbsp;</p><p id='204'>m</p><p id='205'>v</p><p id='206'>a</p><p id='207'>d</p><p id='208'>f</p><p id='209'>j</p>
+      </div>
+     
+      <div class="lineContainer" id="l8">
+        <p id='210'>x</p><p id='211'>&nbsp;</p><p id='212'>v</p><p id='213'>j</p><p id='214'>a</p><p id='215'>s</p><p id='216'>d</p><p id='217'>f</p><p id='218'>a</p><p id='219'>d</p><p id='220'>g</p><p id='221'>a</p><p id='222'>&nbsp;</p><p id='223'>a</p><p id='224'>d</p><p id='225'>s</p><p id='226'>f</p><p id='227'>g</p><p id='228'>d</p><p id='229'>e</p><p id='230'>f</p><p id='231'>a</p><p id='232'>o</p><p id='233'>i</p><p id='234'>u</p><p id='235'>q</p><p id='236'>&nbsp;</p><p id='237'>n</p><p id='238'>c</p><p id='239'>z</p>
+      </div>
+     
+      <div class="lineContainer" id="l9">
+       <p id='240'>x</p><p id='241'>c</p><p id='242'>t</p><p id='243'>g</p><p id='244'>o</p><p id='245'>e</p><p id='246'>&nbsp;</p><p id='247'>y</p><p id='248'>o</p><p id='249'>i</p><p id='250'>w</p><p id='251'>e</p><p id='252'>r</p><p id='253'>m</p><p id='254'>a</p><p id='255'>s</p><p id='256'>d</p><p id='257'>&nbsp;</p><p id='258'>z</p><p id='259'>x</p><p id='260'>c</p><p id='261'>v</p><p id='262'>d</p><p id='263'>f</p><p id='264'>k</p><p id='265'>&nbsp;</p><p id='266'>l</p><p id='267'>a</p><p id='268'>d</p><p id='269'>k</p>
+      </div>
+     
+      <div class="lineContainer" id="l10">
+        <p id='270'>g</p><p id='271'>a</p><p id='272'>l</p><p id='273'>s</p><p id='274'>u</p><p id='275'>t</p><p id='276'>y</p><p id='277'>l</p><p id='278'>&nbsp;</p><p id='279'>H</p><p id='280'>K</p><p id='281'>j</p><p id='282'>d</p><p id='283'>g</p><p id='284'>a</p><p id='285'>d</p><p id='286'>K</p><p id='287'>&nbsp;</p><p id='288'>j</p><p id='289'>d</p><p id='290'>j</p><p id='291'>g</p><p id='292'>y</p><p id='293'>p</p><p id='294'>w</p><p id='295'>n</p><p id='296'>v</p><p id='297'>k</p><p id='298'>s</p><p id='299'>L</p>
+      </div>
+     
+      <div class="lineContainer" id="l11">
+        <p id='300'>x</p><p id='301'>k</p><p id='302'>d</p><p id='303'>f</p><p id='304'>g</p><p id='305'>K</p><p id='306'>j</p><p id='307'>h</p><p id='308'>g</p><p id='309'>d</p><p id='310'>&nbsp;</p><p id='311'>K</p><p id='312'>H</p><p id='313'>l</p><p id='314'>f</p><p id='315'>d</p><p id='316'>g</p><p id='317'>a</p><p id='318'>d</p><p id='319'>j</p><p id='320'>h</p><p id='321'>k</p><p id='322'>g</p><p id='323'>k</p><p id='324'>j</p><p id='325'>I</p><p id='326'>U</p><p id='327'>j</p><p id='328'>g</p><p id='329'>l</p>
+      </div>
+     
+      <div class="lineContainer" id="l12">
+        <p id='330'>k</p><p id='331'>&nbsp;</p><p id='332'>O</p><p id='333'>j</p><p id='334'>j</p><p id='335'>h</p><p id='336'>a</p><p id='337'>H</p><p id='338'>K</p><p id='339'>J</p><p id='340'>&nbsp;</p><p id='341'>K</p><p id='342'>d</p><p id='343'>G</p><p id='344'>u</p><p id='345'>.</p><p id='346'>J</p><p id='347'>j</p><p id='348'>L</p><p id='349'>g</p><p id='350'>j</p><p id='351'>d</p><p id='352'>h</p><p id='353'>K</p><p id='354'>h</p><p id='355'>D</p><p id='356'>;</p><p id='357'>&nbsp;</p><p id='358'>D</p><p id='359'>A</p>
+      </div>
+     
+      <div class="lineContainer" id="l13">
+        <p id='360'>j</p><p id='361'>k</p><p id='362'>d</p><p id='363'>f</p><p id='364'>j</p><p id='365'>g</p><p id='366'>&nbsp;</p><p id='367'>a</p><p id='368'>j</p><p id='369'>k</p><p id='370'>d</p><p id='371'>g</p><p id='372'>h</p><p id='373'>d</p><p id='374'>k</p><p id='375'>E</p><p id='376'>&nbsp;</p><p id='377'>f</p><p id='378'>g</p><p id='379'>j</p><p id='380'>f</p><p id='381'>k</p><p id='382'>g</p><p id='383'>j</p><p id='384'>H</p><p id='385'>k</p><p id='386'>&nbsp;</p><p id='387'>d</p><p id='388'>h</p><p id='389'>w</p>
+      </div>
+      
+      <div class="lineContainer" id="l14">
+        <p id='390'>q</p><p id='391'>h</p><p id='392'>h</p><p id='393'>j</p><p id='394'>d</p><p id='395'>h</p><p id='396'>&nbsp;</p><p id='397'>I</p><p id='398'>o</p><p id='399'>O</p><p id='400'>h</p><p id='401'>g</p><p id='402'>d</p><p id='403'>w</p><p id='404'>e</p><p id='405'>t</p><p id='406'>&nbsp;</p><p id='407'>v</p><p id='408'>m</p><p id='409'>n</p><p id='410'>x</p><p id='411'>c</p><p id='412'>G</p><p id='413'>k</p><p id='414'>K</p><p id='415'>&nbsp;</p><p id='416'>Y</p><p id='417'>t</p><p id='418'>g</p><p id='419'>h</p>
+      </div>
+      
+      <div class="lineContainer" id="l15">
+        <p id='420'>?</p><p id='421'>h</p><p id='422'>d</p><p id='423'>b</p><p id='424'>,</p><p id='425'>&nbsp;</p><p id='426'>h</p><p id='427'>a</p><p id='428'>d</p><p id='429'>g</p><p id='430'>a</p><p id='431'>s</p><p id='432'>d</p><p id='433'>f</p><p id='434'>;</p><p id='435'>&nbsp;</p><p id='436'>h</p><p id='437'>j</p><p id='438'>G</p><p id='439'>h</p><p id='440'>K</p><p id='441'>e</p><p id='442'>p</p><p id='443'>w</p><p id='444'>j</p><p id='445'>s</p><p id='446'>b</p><p id='447'>v</p><p id='448'>&nbsp;</p><p id='449'>w</p>
+      </div>
+     
+      <div class="lineContainer" id="l16">
+        <p id='450'>e</p><p id='451'>o</p><p id='452'>f</p><p id='453'>R</p><p id='454'>d</p><p id='455'>f</p><p id='456'>g</p><p id='457'>e</p><p id='458'>E</p><p id='459'>f</p><p id='460'>S</p><p id='461'>&nbsp;</p><p id='462'>a</p><p id='463'>l</p><p id='464'>q</p><p id='465'>p</p><p id='466'>c</p><p id='467'>O</p><p id='468'>f</p><p id='469'>e</p><p id='470'>D</p><p id='471'>f</p><p id='472'>&nbsp;</p><p id='473'>a</p><p id='474'>j</p><p id='475'>d</p><p id='476'>r</p><p id='477'>I</p><p id='478'>J</p><p id='479'>k</p>
+      </div>
+      
+   
+      <div class="lineContainer" id="l17">
+        <p id='480'>E</p><p id='481'>j</p><p id='482'>f</p><p id='483'>a</p><p id='484'>&nbsp;</p><p id='485'>;</p><p id='486'>d</p><p id='487'>f</p><p id='488'>a</p><p id='489'>;</p><p id='490'>d</p><p id='491'>f</p><p id='492'>p</p><p id='493'>&nbsp;</p><p id='494'>c</p><p id='495'>s</p><p id='496'>s</p><p id='497'>d</p><p id='498'>f</p><p id='499'>d</p><p id='500'>c</p><p id='501'>d</p><p id='502'>f</p><p id='503'>&nbsp;</p><p id='504'>q</p><p id='505'>x</p><p id='506'>m</p><p id='507'>c</p><p id='508'>E</p><p id='509'>f</p>
+      </div>
+       
+      <div class="lineContainer" id="l18">
+        <p id='510'>a</p><p id='511'>j</p><p id='512'>g</p><p id='513'>3</p><p id='514'>&nbsp;</p><p id='515'>6</p><p id='516'>f</p><p id='517'>5</p><p id='518'>h</p><p id='519'>f</p><p id='520'>a</p><p id='521'>a</p><p id='522'>K</p><p id='523'>3</p><p id='524'>j</p><p id='525'>g</p><p id='526'>f</p><p id='527'>&nbsp;</p><p id='528'>e</p><p id='529'>f</p><p id='530'>j</p><p id='531'>a</p><p id='532'>5</p><p id='533'>f</p><p id='534'>S</p><p id='535'>j</p><p id='536'>f</p><p id='537'>E</p><p id='538'>f</p><p id='539'>n</p>
+      </div>
+       
+      <div class="lineContainer" id="l19">
+        <p id='540'>a</p><p id='541'>P</p><p id='542'>d</p><p id='543'>&nbsp;</p><p id='544'>a</p><p id='545'>p</p><p id='546'>Q</p><p id='547'>n</p><p id='548'>e</p><p id='549'>k</p><p id='550'>i</p><p id='551'>c</p><p id='552'>d</p><p id='553'>j</p><p id='554'>k</p><p id='555'>z</p><p id='556'>&nbsp;</p><p id='557'>Z</p><p id='558'>k</p><p id='559'>d</p><p id='560'>z</p><p id='561'>!</p><p id='562'>d</p><p id='563'>f</p><p id='564'>v</p><p id='565'>o</p><p id='566'>U</p><p id='567'>p</p><p id='568'>q</p><p id='569'>d</p>
+      </div>
+       
+
+      <div class="lineContainer" id="l20">
+        <p id='570'>f</p><p id='571'>m</p><p id='572'>a</p><p id='573'>z</p><p id='574'>&nbsp;</p><p id='575'>f</p><p id='576'>e</p><p id='577'>f</p><p id='578'>k</p><p id='579'>l</p><p id='580'>K</p><p id='581'>d</p><p id='582'>a</p><p id='583'>s</p><p id='584'>W</p><p id='585'>f</p><p id='586'>&nbsp;</p><p id='587'>,</p><p id='588'>d</p><p id='589'>f</p><p id='590'>j</p><p id='591'>f</p><p id='592'>:</p><p id='593'>L</p><p id='594'>Q</p><p id='595'>f</p><p id='596'>j</p><p id='597'>d</p><p id='598'>z</p><p id='599'>d</p>
+      </div>
+       
+      <div class="lineContainer" id="l21" >
+        <p id='600'>j</p><p id='601'>?</p><p id='602'>&nbsp;</p><p id='603'>p</p><p id='604'>q</p><p id='605'>s</p><p id='606'>H</p><p id='607'>j</p><p id='608'>&nbsp;</p><p id='609'>v</p><p id='610'>i</p><p id='611'>k</p><p id='612'>d</p><p id='613'>1</p><p id='614'>r</p><p id='615'>f</p><p id='616'>R</p><p id='617'>v</p><p id='618'>n</p><p id='619'>d</p><p id='620'>R</p><p id='621'>i</p><p id='622'>n</p><p id='623'>s</p><p id='624'>x</p><p id='625'>c</p><p id='626'>S</p><p id='627'>&nbsp;</p><p id='628'>u</p><p id='629'>R</p>
+      </div>
+      
+      <div class="lineContainer"  id="l22">
+        <p id='630'>n</p><p id='631'>a</p><p id='632'>O</p><p id='633'>i</p><p id='634'>e</p><p id='635'>n</p><p id='636'>f</p><p id='637'>a</p><p id='638'>f</p><p id='639'>5</p><p id='640'>&nbsp;</p><p id='641'>f</p><p id='642'>d</p><p id='643'>T</p><p id='644'>t</p><p id='645'>y</p><p id='646'>i</p><p id='647'>u</p><p id='648'>P</p><p id='649'>v</p><p id='650'>e</p><p id='651'>&nbsp;</p><p id='652'>J</p><p id='653'>e</p><p id='654'>j</p><p id='655'>M</p><p id='656'>b</p><p id='657'>4</p><p id='658'>6</p><p id='659'>i</p>
+      </div>
+      
+      <div class="lineContainer" id="l23">
+        <p id='660'>L</p><p id='661'>k</p><p id='662'>s</p><p id='663'>I</p><p id='664'>n</p><p id='665'>v</p><p id='666'>a</p><p id='667'>e</p><p id='668'>&nbsp;</p><p id='669'>e</p><p id='670'>I</p><p id='671'>a</p><p id='672'>e</p><p id='673'>I</p><p id='674'>n</p><p id='675'>v</p><p id='676'>e</p><p id='677'>M</p><p id='678'>w</p><p id='679'>i</p><p id='680'>k</p><p id='681'>:</p><p id='682'>&nbsp;</p><p id='683'>i</p><p id='684'>e</p><p id='685'>n</p><p id='686'>?</p><p id='687'>f</p><p id='688'>j</p><p id='689'>3</p>
+      </div>
+      
+      <div class="lineContainer"  id="l24">
+        <p id='690'>r</p><p id='691'>k</p><p id='692'>j</p><p id='693'>I</p><p id='694'>n</p><p id='695'>f</p><p id='696'>a</p><p id='697'>e</p><p id='698'>E</p><p id='699'>3</p><p id='700'>j</p><p id='701'>,</p><p id='702'>&nbsp;</p><p id='703'>i</p><p id='704'>l</p><p id='705'>i</p><p id='706'>o</p><p id='707'>p</p><p id='708'>q</p><p id='709'>i</p><p id='710'>l</p><p id='711'>e</p><p id='712'>n</p><p id='713'>v</p><p id='714'>&nbsp;</p><p id='715'>a</p><p id='716'>e</p><p id='717'>i</p><p id='718'>n</p><p id='719'>v</p>
+      </div>
+      
+   
+      <div class="lineContainer"  id="l25">
+        <p id='720'>I</p><p id='721'>v</p><p id='722'>d</p><p id='723'>L</p><p id='724'>f</p><p id='725'>e</p><p id='726'>&nbsp;</p><p id='727'>i</p><p id='728'>e</p><p id='729'>n</p><p id='730'>v</p><p id='731'>i</p><p id='732'>a</p><p id='733'>I</p><p id='734'>q</p><p id='735'>v</p><p id='736'>a</p><p id='737'>z</p><p id='738'>&nbsp;</p><p id='739'>n</p><p id='740'>k</p><p id='741'>z</p><p id='742'>m</p><p id='743'>x</p><p id='744'>.</p><p id='745'>x</p><p id='746'>d</p><p id='747'>e</p><p id='748'>n</p><p id='749'>e</p>
+      </div>
+      
+      <div class="lineContainer"  id="l26">
+        <p id='750'>i</p><p id='751'>P</p><p id='752'>c</p><p id='753'>z</p><p id='754'>Z</p><p id='755'>&nbsp;</p><p id='756'>j</p><p id='757'>h</p><p id='758'>i</p><p id='759'>T</p><p id='760'>h</p><p id='761'>v</p><p id='762'>n</p><p id='763'>d</p><p id='764'>e</p><p id='765'>&nbsp;</p><p id='766'>j</p><p id='767'>i</p><p id='768'>n</p><p id='769'>v</p><p id='770'>a</p><p id='771'>e</p><p id='772'>v</p><p id='773'>n</p><p id='774'>a</p><p id='775'>p</p><p id='776'>q</p><p id='777'>n</p><p id='778'>&nbsp;</p><p id='779'>r</p>
+      </div>
+       
+      <div class="lineContainer"  id="l27">
+        <p id='780'>i</p><p id='781'>n</p><p id='782'>a</p><p id='783'>i</p><p id='784'>e</p><p id='785'>n</p><p id='786'>v</p><p id='787'>a</p><p id='788'>d</p><p id='789'>&nbsp;</p><p id='790'>a</p><p id='791'>i</p><p id='792'>e</p><p id='793'>m</p><p id='794'>n</p><p id='795'>v</p><p id='796'>e</p><p id='797'>i</p><p id='798'>a</p><p id='799'>i</p><p id='800'>a</p><p id='801'>w</p><p id='802'>n</p><p id='803'>m</p><p id='804'>&nbsp;</p><p id='805'>k</p><p id='806'>a</p><p id='807'>i</p><p id='808'>e</p><p id='809'>n</p>
+      </div>
+      
+      <div class="lineContainer"  id="l28">
+        <p id='810'>v</p><p id='811'>n</p><p id='812'>a</p><p id='813'>l</p><p id='814'>i</p><p id='815'>n</p><p id='816'>v</p><p id='817'>&nbsp;</p><p id='818'>d</p><p id='819'>n</p><p id='820'>f</p><p id='821'>v</p><p id='822'>n</p><p id='823'>v</p><p id='824'>l</p><p id='825'>a</p><p id='826'>d</p><p id='827'>A</p><p id='828'>&nbsp;</p><p id='829'>a</p><p id='830'>j</p><p id='831'>A</p><p id='832'>a</p><p id='833'>d</p><p id='834'>j</p><p id='835'>n</p><p id='836'>v</p><p id='837'>&nbsp;</p><p id='838'>o</p><p id='839'>q</p>
+      </div>
+      
+      <div class="lineContainer"  id="l29">
+        <p id='840'>n</p><p id='841'>v</p><p id='842'>a</p><p id='843'>o</p><p id='844'>n</p><p id='845'>z</p><p id='846'>.</p><p id='847'>a</p><p id='848'>q</p><p id='849'>;</p><p id='850'>&nbsp;</p><p id='851'>:</p><p id='852'>a</p><p id='853'>d</p><p id='854'>j</p><p id='855'>i</p><p id='856'>e</p><p id='857'>n</p><p id='858'>v</p><p id='859'>n</p><p id='860'>d</p><p id='861'>e</p><p id='862'>n</p><p id='863'>&nbsp;</p><p id='864'>i</p><p id='865'>e</p><p id='866'>n</p><p id='867'>i</p><p id='868'>e</p><p id='869'>n</p>
+      </div>
+       
+      <div class="lineContainer" id="l30">
+        <p id='870'>v</p><p id='871'>w</p><p id='872'>e</p><p id='873'>t</p><p id='874'>r</p><p id='875'>a</p><p id='876'>&nbsp;</p><p id='877'>&nbsp;</p><p id='878'>e</p><p id='879'>i</p><p id='880'>n</p><p id='881'>v</p><p id='882'>o</p><p id='883'>a</p><p id='884'>n</p><p id='885'>d</p><p id='886'>n</p><p id='887'>f</p><p id='888'>e</p><p id='889'>&nbsp;</p><p id='890'>j</p><p id='891'>i</p><p id='892'>e</p><p id='893'>n</p><p id='894'>o</p><p id='895'>v</p><p id='896'>n</p><p id='897'>d</p><p id='898'>i</p><p id='899'>n</p>
+      </div>
+      
+      <div class="lineContainer"  id="l31">
+        <p id='900'>f</p><p id='901'>e</p><p id='902'>&nbsp;</p><p id='903'>i</p><p id='904'>n</p><p id='905'>v</p><p id='906'>d</p><p id='907'>n</p><p id='908'>r</p><p id='909'>n</p><p id='910'>v</p><p id='911'>a</p><p id='912'>l</p><p id='913'>d</p><p id='914'>i</p><p id='915'>&nbsp;</p><p id='916'>o</p><p id='917'>q</p><p id='918'>p</p><p id='919'>l</p><p id='920'>i</p><p id='921'>i</p><p id='922'>T</p><p id='923'>j</p><p id='924'>o</p><p id='925'>p</p><p id='926'>N</p><p id='927'>g</p><p id='928'>e</p><p id='929'>k</p>
+      </div>
+      
+   
+     <div class="lineContainer"  id="l32">
+       <p id='930'>n</p><p id='931'>E</p><p id='932'>n</p><p id='933'>v</p><p id='934'>a</p><p id='935'>d</p><p id='936'>k</p><p id='937'>o</p><p id='938'>n</p><p id='939'>f</p><p id='940'>&nbsp;</p><p id='941'>3</p><p id='942'>4</p><p id='943'>p</p><p id='944'>o</p><p id='945'>3</p><p id='946'>n</p><p id='947'>v</p><p id='948'>a</p><p id='949'>d</p><p id='950'>5</p><p id='951'>6</p><p id='952'>&nbsp;</p><p id='953'>*</p><p id='954'>t</p><p id='955'>6</p><p id='956'>4</p><p id='957'>@</p><p id='958'>$</p><p id='959'>5</p>
+     </div>
+    </div>
+    <div class="keyboard">
+      <div class="lineContainer2" id="frow"><p class='key2' id='k34'>Tab</p><p class='key' id='k1'>Q</p><p class='key' id='k2'>W</p><p class='key' id='k3'>E</p><p class='key' id='k4'>R</p><p class='key' id='k5'>T</p><p class='key' id='k6'>Y</p><p class='key' id='k7'>U</p><p class='key' id='k8'>I</p><p class='key' id='k9'>O</p><p class='key' id='k10'>P</p><p class='key2' id='k35'>{[</p><p class='key2' id='k36'>]}</p></div>
+      <div class="lineContainer2" id="srow"><p class='key2' id='k33'>Caps</p><p class='key' id='k11'>A</p><p class='key' id='k12'>S</p><p class='key' id='k13'>D</p><p class='key' id='k14'>F</p><p class='key' id='k15'>G</p><p class='key' id='k16'>H</p><p class='key' id='k17'>J</p><p class='key' id='k18'>K</p><p class='key' id='k19'>L</p><p class="key2" id="k28">:;</p><p class="key2" id="k37">"'</p><p class="key2" id="k38">|\</p></div>
+      <div class="lineContainer2" id="trow"><p class='key2' id='k29'>Shift</p><p class='key' id='k20'>Z</p><p class='key' id='k21'>X</p><p class='key' id='k22'>C</p><p class='key' id='k23'>V</p><p class='key' id='k24'>B</p><p class='key' id='k25'>N</p><p class='key' id='k26'>M</p><p class='key2' id='k30'><,</p><p class='key2' id='k31'>>.</p><p class='key2' id='k32'>?/</p><p class="key2" id="k45">Shift</p></div>
+      <div class="lineContainer2"><p class="key2" id="k39">Ctrl</p><p class="key2" id="k40">&#9744;</p><p class="key2" id="k41">Alt</p><p class="key" id="k27">SPACE</p><p class="key2" id="k42">Alt</p><p class="key2" id="k43">&#9744;</p><p class="key2" id="k44">Ctrl</p></div>
+    </div>
+    <div class="option">
+        <button class="btn" id="exit">EXIT</button>   
+        <button class="btn" id="rsbutton">START</button> 
+        <button class="btn" id="rsbutton2" style="display:none">RESTART</button>    
+    </div>
+
+  </div>
+
+</body>
+</center>
+
+</html>
+
+

@@ -1,0 +1,19 @@
+body{
+    background-image: url(https://cdn-images-1.medium.com/max/2600/1*ee9Ji2ToUxeYfj3YUQ1xsA.jpeg);
+    background-position-y:30%;
+    background-position-x:40%;
+}
+
+body .option{
+    margin-top: 20%;
+}   
+body .container{
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 2px black, 0 0 25px lightblue, 0 0 5px white; 
+    height: 20%;   
+}
+h1{
+    color: cyan;
+    text-shadow: 1px 1px 2px black, 0 0 25px lightblue, 0 0 5px white;
+}
+

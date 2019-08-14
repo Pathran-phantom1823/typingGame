@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="styles.css"	>
+  <link rel="stylesheet" type="text/css" href="style.css"  >
+</head>
+<body>
+	
+<div class="body">	
+</div>
+<div class="title"> 
+  <center><h1 class="display-1" style="margin-top: 10%; "><img src="web_assets/text.png"></h1></center>
+</div>
+<!-- 
+<div class="wrapper">
+  <div class="message">
+  	<h1 class="ml5" style="margin-left: 20%;">
+			  <span class="text-wrapper">
+			    <span class="line line1"></span>
+			    <span class="letters letters-left"><img src="J3.gif"></span>
+			    <span class="letters ampersand"><img src="Typing.gif"></span>
+			    <span class="letters letters-right"><img src="Test.gif"></span>
+			    <span class="line line2"></span>
+			  </span>  
+		</h1>
+  </div> -->
+  <div class = "btnExplore">
+      <center><button type="button" id= "Explore" class="btn btn-primary" onclick="openNav()"><i class="fa fa-chrome"> Explore More</i></button></center>
+  </div>
+
+  <div id="myNav" class="overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <center><h2><img src="web_assets/J3TypingTest.gif"></h2></center>
+      <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-black w3-left-align"><strong style="font-size: 30px;"><i class="fa fa-gamepad">&nbsp;&nbsp;J3 Game</i></strong></button>
+      <div id="Demo1" class="w3-hide w3-container" style="background-color:white;"  >
+         <div class="jumbotron">
+          <div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel" style="height: 80%;width: 80%; margin-left:10%;">
+        <!--Indicators-->
+        <ol class="carousel-indicators">
+          <li data-target="#carousel-example-2" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel-example-2" data-slide-to="1"></li>
+          <li data-target="#carousel-example-2" data-slide-to="2"></li>
+        </ol>
+        <!--/.Indicators-->
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+          <div class="carousel-item active">
+            <div class="view">
+              <img class="d-block w-100" style="height:389px;" src="web_assets/easy.png"
+                alt="First slide">
+              <div class="mask rgba-black-light"></div>
+            </div>
+            <!-- <div class="carousel-caption" style="background: rgba(6, 25, 239, 0.5);text-shadow: 1px 1px 2px black, 0 0 25px lightblue, 0 0 5px white;">
+              <h3 class="h3-responsive">Experience the Thrill</h3>
+              <p>Typing Easy</p>
+            </div> -->
+          </div>
+          <div class="carousel-item">
+            <!--Mask color-->
+            <div class="view">
+              <img class="d-block w-100" style="height:390px;" src="web_assets/hard.png"
+                alt="Second slide">
+              <div class="mask rgba-black-strong"></div>
+            </div>
+            <!-- <div class="carousel-caption" style="background: rgba(6, 25, 239, 0.5); text-shadow: 1px 1px 2px black, 0 0 25px lightblue, 0 0 5px white;">
+              <h3 class="h3-responsive">Experience the Excitement in every seconds</h3>
+              <p>Typing Hard</p>
+            </div> -->
+          </div>
+          <div class="carousel-item">
+            <!--Mask color-->
+            <div class="view">
+              <img class="d-block w-100" style="height:390px;" src="web_assets/game.png"
+                alt="Third slide">
+              <div class="mask rgba-black-slight"></div>
+            </div>
+           <!--  <div class="carousel-caption" style="background: rgba(6, 25, 239, 0.5); text-shadow: 1px 1px 2px black, 0 0 25px lightblue, 0 0 5px white;">
+              <h3 class="h3-responsive">Experience Different Difficulty of Game</h3>
+              <p>Typing Game</p>
+            </div> -->
+          </div>
+        </div>
+        <!--/.Slides-->
+        <!--Controls-->
+        <a class="carousel-control-prev" href="#carousel-example-2" role="button" data-slide="prev">
+          <span class="sr-only" style="position:relative;"></span>
+        </a>
+        <a class="carousel-control-next" href="#carousel-example-2" role="button" data-slide="next">
+          <span class="sr-only"></span>
+        </a>
+        <!--/.Controls-->
+      </div><br><br>
+      <!--/.Carousel Wrapper--> 
+        <p style="text-align:center;">This Game was developed for the purpose of enhancing the typing skills of<br>people who
+          will play this game. It is people friendly since it is easy to use, to understand.<br>This game features the ability to change the time alloted every play. You can adjust depends on your<br>speed in typing. </p>
+          <div class="play" style="text-align:center;">
+            <button type="button" id="play" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-gamepad">&nbsp;&nbsp;Play Game</i></button>
+        </div>
+      </div>
+      </div>
+
+
+      <button onclick="myFunction('Demo2')" class="w3-button w3-block w3-black w3-left-align"><strong style="font-size: 30px;"><i class="fa fa-users">&nbsp;&nbsp;Developers</i></strong></button>
+      <div id="Demo2" class="w3-hide w3-container" style="background-color:white;">
+        <div id="dev">
+              <center><input type="button" id="developers" value="Click here to view Developers Profile"></center>
+        </div>
+        <center><table style="display: none;" id="profile">  
+        <tr><td><div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+          <div class="card" style="width:400px">
+            <img class="card-img-top" src="web_assets/tansyong.jpg" alt="Card image" style="width:100%">
+            <div class="card-body">
+              <h4 class="card-title">Jonathan Rivas</h4>
+              <p class="card-text"><li>Arist</li>
+                                  <li>Studied in University Of San Carlos</li>
+                                  <li>PN Scholar Batch 2021</li>
+                                  <li>Coarse: Certificate in Computer Science</li>
+              </p>
+            </div>
+          </div>
+      </div></td>
+      <td><div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+          <div class="card" style="width:400px">
+            <img class="card-img-top" src="web_assets/Patrick.jpg" alt="Card image" style="width:100%">
+            <div class="card-body">
+              <h4 class="card-title">John Patrick Cabia-an</h4>
+              <p class="card-text"><li>Video Maker</li>
+                                  <li>Studied in University Of San Carlos</li>
+                                  <li>PN Scholar Batch 2021</li>
+                                  <li>Coarse: Certificate in Computer Science</li></p>
+            </div>
+          </div>
+      </div></td>
+      <td><div class="container" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+          <div class="card" style="width:400px">
+            <img class="card-img-top" src="web_assets/patchan.png" alt="Card image" style="width:100%">
+            <div class="card-body">
+              <h4 class="card-title">Jan Patrick Tancinco</h4>
+              <p class="card-text"><li>Singer</li>
+                                    <li>Studied in University Of San Carlos</li>
+                                    <li>PN Scholar Batch 2021</li>
+                                    <li>Coarse: Certificate in Computer Science</li></p>
+            </div>
+          </div>
+      </div></td>
+    </table></center>
+  </div> 
+      <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-black w3-left-align"><strong style="font-size: 30px;"><i class="fa fa-envelope">&nbsp;&nbsp;Contacts</i></strong></button>
+      <div id="Demo3" class="w3-hide w3-container" style="background-color:white;">
+          <i class="fa fa-envelope prefix"></i>&nbsp;johnpatrick.cabia-an@student.passerellesnumeriques.org<br>
+          <i class="fa fa-envelope prefix"></i>&nbsp;jonathan.rivas@student.passerellesnumeriques.org<br>
+          <i class="fa fa-envelope prefix"></i>&nbsp;janpatrick.tancinco@student.passerellesnumeriques.org
+      </div>
+</div>
+
+  
+
+
+
+
+
+
+
+<!--Modal: Login / Register Form-->
+   <!-- The Modal --> 
+   <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">J3 Typing Test</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+         <div class="modal-body">
+            <center><a href="login.php"><button type="button" class="btn btn-success"><i class="fa fa-sign-in">&nbsp;&nbsp;Login</i></button></a>
+            <a href="register.php"><button type="button" class="btn btn-primary"><i class="fa fa-sign-in">&nbsp;&nbsp;REGISTER</i></button></a></center>
+          <!--<Form action = "difficulty.html" onsubmit ="return checkform()">
+            <table >
+                  <tr><td><label id="fname"><i class="fa fa-user">&nbsp;&nbsp;First Name:</i></label><br><input type="text" id="fname" name="fname" placeholder="First Name" required/></td>
+                  <td><label id="lname"><i class="fa fa-user">&nbsp;&nbsp;Last Name:</i></label><br><input type="text" id="lname" name="lname" placeholder="Last Name" required/></td></tr></table><br>
+            <table>
+                  <tr><td><label id="user"><i class="fa fa-user">&nbsp;&nbsp;User Name:</i></label><br><input type="text" id="Uname" name="Uname" placeholder="User Name" required  onkeyup="userNameCheck(this.value)"/>
+                   <label id="userCheck" class="ErrorName"></label>
+                  <p><span id="txtHint"></span></p></td>
+
+                  <td><div id="email">
+                  <label id="email"><i class="fa fa-envelope">&nbsp;&nbsp;Email:</i></label><br><input type="email" id="Email" name="email" placeholder="email@gmail.com" onkeyup = "suggestion(this.value)" required/><br><br></td>
+                  </div></tr>
+            </table>
+
+            <div class="myPass">
+            <label id="password"><i class="fa fa-lock">&nbsp;&nbsp;Password:</i></label><br><input type="password" id="password" name="password" placeholder="Password" onkeyup="validation(this.value)"  required><br>
+            </div>
+            <label id="validation-txt" class = "ErrorPassword"></label><br><br>
+
+            
+
+<hr>
+
+
+    <legend>Gender:</legend><br>
+    <input type="radio" name="gender" id="gender1" value="male" /><label for="male">Male</label><br />
+    <input type="radio" name="gender" id="gender2" value="female"  /><label for="female">Female</label><br />
+    <input type="radio" name="gender" id="gender3" value="others" /><label for="others">Others</label><br/><br>
+
+<hr>
+
+
+    <legend>Status:</legend><br>
+    <input type="radio" id="single" name="status"  value ="single" onclick="javascript:statusCheck1();"><label>Single</label>
+    <input type="radio" id="married" name="status" value="married" onclick="javascript:statusCheck();"><label>Married</label><br><br>
+
+
+    <div id="hiddenfields" style= "display:none">
+                    <fieldset class="box"><legend id="marriedcheck">Spouse:</legend>
+                    <input type="text" id="nameofspouse" class="inputbox" name="nameOfSpouse"/></fieldset><br>
+                    <fieldset class="box"><legend id="nameofchild" >Name of Children:</legend>
+                    <input type="text" id="childinput" class="inputbox" name="0"/>
+                    <label id="child_add"><label></fieldset>
+                    <input type="number"  style="display:none" id="numberofchild" name="numberofchildren">
+                    <button  type="button" name="add" onclick="addchild()">+</button>
+                    <button  type="button" name="delete" onclick="deletechild()">-</button>
+            
+        
+
+</div> -->
+<hr>
+
+
+
+
+    
+      <!--  <legend id="favorites"> Favorites:</legend><br>
+        <div id="fav1">&emsp;&emsp;<input type="checkbox" name="fav[]" id="favorite" value="Playing"><label>Online Games</label> <br><br></div>
+        <div id="fav2"> &emsp;&emsp;<input type="checkbox" name="fav[]" id="favorite1" value="sports"><label>Playing Sports</label><br><br></div>
+        <div id="fav3"> &emsp;&emsp;<input type="checkbox" name="fav[]" id="favorite2" value="foods"><label>Eating Foods</label><br><br></div>
+        <div id="fav4"> &emsp;&emsp;<input type="checkbox" name="fav[]" id="favorite3" value="watching"><label>Watching Movies</label><br><br></div> -->
+ 
+
+
+<!-- <div id="submit">
+         <button type="submit" id = "submit" class="btn btn-primary"><i class="fa fa-sign-in">&nbsp;&nbsp;REGISTER</i></button>
+          
+</div> -->
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</body>
+<script type="text/javascript">
+	
+  function openNav() {
+  document.getElementById("myNav").style.width = "100%";
+}
+
+function closeNav() {
+  document.getElementById("myNav").style.width = "0%";
+}
+
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+    x.previousElementSibling.className = 
+    x.previousElementSibling.className.replace("w3-white", "w3-red");
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+    x.previousElementSibling.className = 
+    x.previousElementSibling.className.replace("w3-red", "w3-white");
+  }
+}
+ var password_correct = true;
+            var checkbox_checked = 0;
+            var childnameindex = 0;
+            var username_correct = true;
+            
+
+            function checkform(form) {
+            if (username_correct == false) {
+                alert("Please enter another username! The username you have entered is already used by other user.");
+                return false;
+            } 
+            if (password_correct == false) {
+                alert("Please enter another password! Your password must consist of at least 8 characters with at least 1 number, lowercase letter, and uppercase letter.");
+                return false;
+            }
+            
+
+           
+            // var fav = ["favorite","favorite1","favorite2","favorite3"];
+            // for (var i=0;i<4;++i) {
+            //     if (document.getElementById(fav[i]).checked == true) {
+            //         ++checkbox_checked;
+            //     }
+            // }
+            // if (checkbox_checked <= 0 && username_correct==true && password_correct == true) {
+            //     alert("Please check at least one favorite!");
+            //     return false;
+            // } 
+            // return true;
+        }
+    
+    function statusCheck(){
+        document.getElementById('hiddenfields').style.display='block';
+        document.getElementById("nameofspouse").required = true;
+    }
+    function statusCheck1(){
+        document.getElementById('hiddenfields').style.display='none';
+        document.getElementById("nameofspouse").required = false;
+    }
+
+ 
+
+function addchild() {
+        var node = document.createElement("INPUT");
+        node.setAttribute("type", "text");
+        node.className = "inputbox";
+        ++childnameindex;
+        node.setAttribute("name", childnameindex);
+        document.getElementById("numberofchild").value = childnameindex+1;
+      document.getElementById("child_add").appendChild(node);
+    }
+
+function deletechild() {
+  var elem = document.getElementById('child_add');
+  elem.removeChild(elem.childNodes[0]);
+  }
+function validation(str){
+             if (password.length == 0) {
+                document.getElementById("validation-txt").innerHTML="";
+                password_correct = true;
+            }else{
+             var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+             if (re.test(str) == false) {
+              document.getElementById("validation-txt").innerHTML="Error input Password!! ";
+              password_correct = false;
+          
+             } else {
+              document.getElementById("validation-txt").innerHTML="";
+              password_correct = true;
+          }
+        }
+           
+        }
+
+        function userNameCheck(str){
+    if (str.length==0) { 
+    document.getElementById("userCheck").innerHTML="";
+    username_correct = false;
+    return;
+   }
+    xmlHttp=GetXmlHttpObject();
+    var url="usercheck.php";
+    url=url+"?q="+str;
+  url=url+"&sid="+Math.random();
+  xmlHttp.onreadystatechange=stateChanged ;
+    xmlHttp.open("GET",url,true);
+    xmlHttp.send(null);
+ } 
+
+
+function stateChanged() { 
+    if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete") { 
+  document.getElementById("userCheck").innerHTML=xmlHttp.responseText;
+    if (xmlHttp.responseText == "Username is not Available!") {
+        username_correct = false;
+    } else {
+        username_correct = true;
+    }
+  } 
+}
+ 
+
+function GetXmlHttpObject() {
+    var xmlHttp=null;
+    try {
+  // Firefox, Opera 8.0+, Safari
+  xmlHttp=new XMLHttpRequest();
+  }
+    catch (e) {
+  // Internet Explorer
+  try {
+    xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+  }
+  catch (e) {
+    xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+  }
+ return xmlHttp;
+}
+
+
+$('#developers').click(function(){
+  $('#profile').animate({
+    height: 'toggle'
+
+  })
+});
+
+$('#develop').on('click',function(){
+    $('#developers').animate({left: '250px'});
+});
+
+</script>
+</html>
